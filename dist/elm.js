@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.T.J === region.Z.J)
+	if (region.T.J === region.Y.J)
 	{
 		return 'on line ' + region.T.J;
 	}
-	return 'on lines ' + region.T.J + ' through ' + region.Z.J;
+	return 'on lines ' + region.T.J + ' through ' + region.Y.J;
 }
 
 
@@ -3992,7 +3992,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ay);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ax);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -4074,9 +4074,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.al === next.al
-							&& curr.ac === next.ac
-							&& curr.ai.a === next.ai.a
+							&& curr.ak === next.ak
+							&& curr.ab === next.ab
+							&& curr.ah.a === next.ah.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4156,17 +4156,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aD: 'hidden', az: 'visibilitychange' }
+		? { aD: 'hidden', ay: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aD: 'mozHidden', az: 'mozvisibilitychange' }
+		? { aD: 'mozHidden', ay: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aD: 'msHidden', az: 'msvisibilitychange' }
+		? { aD: 'msHidden', ay: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aD: 'webkitHidden', az: 'webkitvisibilitychange' }
-		: { aD: 'hidden', az: 'visibilitychange' };
+		? { aD: 'webkitHidden', ay: 'webkitvisibilitychange' }
+		: { aD: 'hidden', ay: 'visibilitychange' };
 }
 
 
@@ -4247,12 +4247,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		ap: _Browser_getScene(),
-		as: {
-			au: _Browser_window.pageXOffset,
-			av: _Browser_window.pageYOffset,
-			at: _Browser_doc.documentElement.clientWidth,
-			ab: _Browser_doc.documentElement.clientHeight
+		ao: _Browser_getScene(),
+		ar: {
+			at: _Browser_window.pageXOffset,
+			au: _Browser_window.pageYOffset,
+			as: _Browser_doc.documentElement.clientWidth,
+			aa: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4262,8 +4262,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		at: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		ab: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		as: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		aa: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4286,15 +4286,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			ap: {
-				at: node.scrollWidth,
-				ab: node.scrollHeight
+			ao: {
+				as: node.scrollWidth,
+				aa: node.scrollHeight
 			},
-			as: {
-				au: node.scrollLeft,
-				av: node.scrollTop,
-				at: node.clientWidth,
-				ab: node.clientHeight
+			ar: {
+				at: node.scrollLeft,
+				au: node.scrollTop,
+				as: node.clientWidth,
+				aa: node.clientHeight
 			}
 		};
 	});
@@ -4324,18 +4324,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			ap: _Browser_getScene(),
-			as: {
-				au: x,
-				av: y,
-				at: _Browser_doc.documentElement.clientWidth,
-				ab: _Browser_doc.documentElement.clientHeight
+			ao: _Browser_getScene(),
+			ar: {
+				at: x,
+				au: y,
+				as: _Browser_doc.documentElement.clientWidth,
+				aa: _Browser_doc.documentElement.clientHeight
 			},
 			aB: {
-				au: x + rect.left,
-				av: y + rect.top,
-				at: rect.width,
-				ab: rect.height
+				at: x + rect.left,
+				au: y + rect.top,
+				as: rect.width,
+				aa: rect.height
 			}
 		};
 	});
@@ -4957,7 +4957,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {aa: fragment, ac: host, ag: path, ai: port_, al: protocol, am: query};
+		return {_: fragment, ab: host, af: path, ah: port_, ak: protocol, al: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5248,7 +5248,7 @@ var $author$project$Main$Model = function (dieFace) {
 							return function (spell) {
 								return function (spellslot) {
 									return function (enemyDamaged) {
-										return {q: attack, E: blessedStrikes, Y: dieFace, r: enemyDamaged, s: level, B: spell, C: spellslot, v: spiritShroud, w: touchOfDeath, O: weapon};
+										return {q: attack, E: blessedStrikes, az: dieFace, r: enemyDamaged, s: level, B: spell, C: spellslot, v: spiritShroud, w: touchOfDeath, O: weapon};
 									};
 								};
 							};
@@ -5571,9 +5571,7 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $author$project$Main$Roll = {$: 0};
 var $elm$html$Html$article = _VirtualDom_node('article');
-var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6178,26 +6176,8 @@ var $author$project$Main$damageDescriptorView = function (model) {
 				},
 				$author$project$Main$calculateDamageDescriptors(model))));
 };
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $author$project$Main$meleeSpells = _List_fromArray(
 	[0, 2]);
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 0, a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
 var $author$project$Main$rangedSpells = _List_fromArray(
 	[1]);
 var $author$project$Main$AttackTypeChanged = function (a) {
@@ -6222,6 +6202,7 @@ var $elm$html$Html$Events$alwaysStop = function (x) {
 var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
 	return {$: 1, a: a};
 };
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var $elm$html$Html$Events$stopPropagationOn = F2(
 	function (event, decoder) {
 		return A2(
@@ -6401,6 +6382,16 @@ var $elm$html$Html$Attributes$boolProperty = F2(
 			$elm$json$Json$Encode$bool(bool));
 	});
 var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('checked');
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
 var $elm$json$Json$Decode$bool = _Json_decodeBool;
 var $elm$html$Html$Events$targetChecked = A2(
 	$elm$json$Json$Decode$at,
@@ -6649,25 +6640,7 @@ var $author$project$Main$view = function (model) {
 								]));
 				}
 			}(),
-				$author$project$Main$damageDescriptorView(model),
-				A2(
-				$elm$html$Html$h1,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text(
-						$elm$core$String$fromInt(model.Y))
-					])),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Events$onClick($author$project$Main$Roll)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Roll')
-					]))
+				$author$project$Main$damageDescriptorView(model)
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(

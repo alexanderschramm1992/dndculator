@@ -313,10 +313,7 @@ view model =
           [ selectSpell rangedSpells
           , setSpellSlot model.spellslot
           , setModifiers model ]
-    , damageDescriptorView model
-    , h1 [] [ text (String.fromInt model.dieFace) ]
-    , button [ onClick Roll ] [ text "Roll" ]
-    ]
+    , damageDescriptorView model ]
 
 setLevel: Int -> Html Msg
 setLevel level = div [] 
