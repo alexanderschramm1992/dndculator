@@ -45,6 +45,13 @@ touchOfDeathBonus level =
   { amount = SupplementedAmount NoAmount (5 + (2 * level))
   , damageType = Necrotic }
 
+criticalSuccessBonus: DamageAmount -> DamageAmount
+criticalSuccessBonus damageAmount = case damageAmount of
+  NoAmount -> NoAmount
+  DiceAmount factor dice -> DiceAmount (factor * 2) dice
+  SupplementedAmount amount supplement -> SupplementedAmount (criticalSuccessBonus amount) supplement
+  CombinedAmount amount1 amount2 -> CombinedAmount (criticalSuccessBonus amount1) (criticalSuccessBonus amount2)
+
 type Weapon = WhisperingScythe
 weapons: List Weapon
 weapons = [ WhisperingScythe ]
@@ -154,26 +161,32 @@ calculateMeleeWeaponAttackDamageDescriptors model =
     bonusOfTouchOfDeath = if model.touchOfDeath then Just (touchOfDeathBonus model.level) else Nothing
     bonusOfBlessedStrikes = if model.blessedStrikes then Just blessedStrikesBonus else Nothing
     bonusOfSpiritShroud = if model.spiritShroud then Just (spiritShroudBonus 3) else Nothing
+    bonusOfCriticalSuccess = if model.criticalSuccess then criticalSuccessBonus else identity
   in [ weaponDamage, bonusOfTouchOfDeath, bonusOfBlessedStrikes, bonusOfSpiritShroud ]
     |> List.filterMap identity
     |> combineDamageDescriptors
+    |> List.map (\descriptor -> { descriptor | amount = bonusOfCriticalSuccess descriptor.amount })
 calculateMeleeSpellAttackDamageDescriptors: Model -> List DamageDescriptor
 calculateMeleeSpellAttackDamageDescriptors model =
   let
     spellDamage = Just (spellDamageOf model.spell model.level model.spellslot model.enemyDamaged)
     bonusOfTouchOfDeath = if model.touchOfDeath then Just (touchOfDeathBonus model.level) else Nothing
     bonusOfSpiritShroud = if model.spiritShroud then Just (spiritShroudBonus 3) else Nothing
+    bonusOfCriticalSuccess = if model.criticalSuccess then criticalSuccessBonus else identity
   in [ spellDamage, bonusOfTouchOfDeath, bonusOfSpiritShroud]
     |> List.filterMap identity
     |> combineDamageDescriptors
+    |> List.map (\descriptor -> { descriptor | amount = bonusOfCriticalSuccess descriptor.amount })
 
 calculateRangedSpellAttackDamageDescriptors: Model -> List DamageDescriptor
 calculateRangedSpellAttackDamageDescriptors model =
   let
     spellDamage = Just (spellDamageOf model.spell model.level model.spellslot model.enemyDamaged)
+    bonusOfCriticalSuccess = if model.criticalSuccess then criticalSuccessBonus else identity
   in [ spellDamage ]
     |> List.filterMap identity
     |> combineDamageDescriptors
+    |> List.map (\descriptor -> { descriptor | amount = bonusOfCriticalSuccess descriptor.amount })
 
 combineDamageAmounts: DamageAmount -> DamageAmount -> DamageAmount
 combineDamageAmounts firstAmount secondAmount = case (firstAmount, secondAmount) of
@@ -227,12 +240,13 @@ type alias Model =
   , spiritShroud: Bool
   , spell: Spell
   , spellslot: Int
+  , criticalSuccess: Bool
   , enemyDamaged: Bool
   }
 
 init : () -> (Model, Cmd Msg)
 init _ =
-  ( Model 1 1 MeleeWeaponAttack False WhisperingScythe True False InflictWounds 1 False
+  ( Model 1 1 MeleeWeaponAttack False WhisperingScythe True False InflictWounds 1 False False
   , Cmd.none
   )
 
@@ -249,6 +263,7 @@ type Msg
   | SpiritShroudToggled Bool
   | SpellChanged String
   | SpellslotChanged String
+  | CriticalSuccessToggled Bool
   | EnemyDamagedToggled Bool
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -259,7 +274,7 @@ update msg model =
       , Random.generate NewFace (Random.int 1 6)
       )
     NewFace newFace ->
-      ( Model newFace model.level model.attack model.touchOfDeath model.weapon model.blessedStrikes model.spiritShroud model.spell model.spellslot model.enemyDamaged
+      ( Model newFace model.level model.attack model.touchOfDeath model.weapon model.blessedStrikes model.spiritShroud model.spell model.spellslot model.criticalSuccess model.enemyDamaged
       , Cmd.none
       )
     LevelChanged level -> case String.toInt level of
@@ -287,6 +302,7 @@ update msg model =
     SpellslotChanged slot -> case String.toInt slot of
         Just parsedSlot -> ( { model | spellslot = parsedSlot }, Cmd.none )
         Nothing -> ( model, Cmd.none )
+    CriticalSuccessToggled _ -> ( { model | criticalSuccess = not model.criticalSuccess }, Cmd.none )
     EnemyDamagedToggled _ -> ( { model | enemyDamaged = not model.enemyDamaged }, Cmd.none )
 
 -- SUBSCRIPTIONS
@@ -386,10 +402,18 @@ setSpellSlot slot = div []
   , input
     [ class "spellslot"
     , type_ "range"
-    , Html.Attributes.min "1"
+    , Html.Attributes.min "0"
     , Html.Attributes.max "10" 
     , onInput SpellslotChanged 
     , slot |> String.fromInt |> value ] [] ]
+
+checkCriticalSuccess: Bool -> Html Msg
+checkCriticalSuccess isActive = label []
+  [ input
+      [ type_ "checkbox"
+      , checked isActive
+      , onCheck CriticalSuccessToggled ] []
+  , span [ class "checkable" ] [ text " Critical Success" ] ]
 
 checkEnemyDamaged: Bool -> Html Msg
 checkEnemyDamaged isActive = label []
@@ -405,15 +429,18 @@ setModifiers model = div []
   , article [ class "card padding" ] 
     ( case model.attack of
       MeleeWeaponAttack -> 
-        [ checkTouchOfDeath model.touchOfDeath
+        [ checkCriticalSuccess model.criticalSuccess
+        , checkTouchOfDeath model.touchOfDeath
         , checkBlessedStrikes model.blessedStrikes
         , checkSpiritShroud model.spiritShroud ]
       MeleeSpellAttack -> 
-        [ checkTouchOfDeath model.touchOfDeath
+        [ checkCriticalSuccess model.criticalSuccess
+        , checkTouchOfDeath model.touchOfDeath
         , checkEnemyDamaged model.enemyDamaged
         , checkSpiritShroud model.spiritShroud ]
       RangedSpellAttack -> 
-        [ checkEnemyDamaged model.enemyDamaged ] ) ]
+        [ checkCriticalSuccess model.criticalSuccess
+        , checkEnemyDamaged model.enemyDamaged ] ) ]
 
 damageAmountView: DamageAmount -> Html Msg
 damageAmountView amount =
@@ -440,12 +467,14 @@ damageAmountView amount =
         , damageAmountView second ]
 
 damageDescriptorView: Model -> Html Msg
-damageDescriptorView model = model 
-  |> calculateDamageDescriptors 
-  |> List.map (\descriptor -> span 
-    [class "damage-descriptor label"] 
-    [ (damageAmountView descriptor.amount)
-    , text " "
-    , (descriptor.damageType |> damageTypeToString |> text) ])
-  |> List.intersperse (text " + ")
-  |> div [class "damage-descriptors"]
+damageDescriptorView model = div []
+  [ label [ class "bold" ] [ text "Resulting Damage" ]
+  , model 
+    |> calculateDamageDescriptors 
+    |> List.map (\descriptor -> span 
+      [class "damage-descriptor label"] 
+      [ (damageAmountView descriptor.amount)
+      , text " "
+      , (descriptor.damageType |> damageTypeToString |> text) ])
+    |> List.intersperse (text " + ")
+    |> div [class "damage-descriptors"] ]

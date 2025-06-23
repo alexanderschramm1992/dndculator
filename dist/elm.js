@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.T.J === region.Y.J)
+	if (region.U.K === region.Z.K)
 	{
-		return 'on line ' + region.T.J;
+		return 'on line ' + region.U.K;
 	}
-	return 'on lines ' + region.T.J + ' through ' + region.Y.J;
+	return 'on lines ' + region.U.K + ' through ' + region.Z.K;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aF,
-		impl.aN,
-		impl.aL,
+		impl.aG,
+		impl.aO,
+		impl.aM,
 		function() { return function() {} }
 	);
 });
@@ -2719,9 +2719,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		t: func(record.t),
-		U: record.U,
-		R: record.R
+		u: func(record.u),
+		V: record.V,
+		S: record.S
 	}
 });
 
@@ -2989,11 +2989,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.t;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.U;
+		var message = !tag ? value : tag < 3 ? value.a : value.u;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.V;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.R) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.S) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3943,11 +3943,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aF,
-		impl.aN,
-		impl.aL,
+		impl.aG,
+		impl.aO,
+		impl.aM,
 		function(sendToApp, initialModel) {
-			var view = impl.aO;
+			var view = impl.aP;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3979,12 +3979,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aF,
-		impl.aN,
-		impl.aL,
+		impl.aG,
+		impl.aO,
+		impl.aM,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.S && impl.S(sendToApp)
-			var view = impl.aO;
+			var divertHrefToApp = impl.T && impl.T(sendToApp)
+			var view = impl.aP;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3992,12 +3992,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ax);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ay);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aM) && (_VirtualDom_doc.title = title = doc.aM);
+				(title !== doc.aN) && (_VirtualDom_doc.title = title = doc.aN);
 			});
 		}
 	);
@@ -4053,12 +4053,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aH;
-	var onUrlRequest = impl.aI;
+	var onUrlChange = impl.aI;
+	var onUrlRequest = impl.aJ;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		S: function(sendToApp)
+		T: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4074,9 +4074,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ak === next.ak
-							&& curr.ab === next.ab
-							&& curr.ah.a === next.ah.a
+							&& curr.al === next.al
+							&& curr.ac === next.ac
+							&& curr.ai.a === next.ai.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4084,13 +4084,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aF: function(flags)
+		aG: function(flags)
 		{
-			return A3(impl.aF, flags, _Browser_getUrl(), key);
+			return A3(impl.aG, flags, _Browser_getUrl(), key);
 		},
+		aP: impl.aP,
 		aO: impl.aO,
-		aN: impl.aN,
-		aL: impl.aL
+		aM: impl.aM
 	});
 }
 
@@ -4156,17 +4156,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aD: 'hidden', ay: 'visibilitychange' }
+		? { aE: 'hidden', az: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aD: 'mozHidden', ay: 'mozvisibilitychange' }
+		? { aE: 'mozHidden', az: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aD: 'msHidden', ay: 'msvisibilitychange' }
+		? { aE: 'msHidden', az: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aD: 'webkitHidden', ay: 'webkitvisibilitychange' }
-		: { aD: 'hidden', ay: 'visibilitychange' };
+		? { aE: 'webkitHidden', az: 'webkitvisibilitychange' }
+		: { aE: 'hidden', az: 'visibilitychange' };
 }
 
 
@@ -4247,12 +4247,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		ao: _Browser_getScene(),
-		ar: {
-			at: _Browser_window.pageXOffset,
-			au: _Browser_window.pageYOffset,
-			as: _Browser_doc.documentElement.clientWidth,
-			aa: _Browser_doc.documentElement.clientHeight
+		ap: _Browser_getScene(),
+		as: {
+			au: _Browser_window.pageXOffset,
+			av: _Browser_window.pageYOffset,
+			at: _Browser_doc.documentElement.clientWidth,
+			ab: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4262,8 +4262,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		as: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		aa: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		at: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		ab: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4286,15 +4286,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			ao: {
-				as: node.scrollWidth,
-				aa: node.scrollHeight
+			ap: {
+				at: node.scrollWidth,
+				ab: node.scrollHeight
 			},
-			ar: {
-				at: node.scrollLeft,
-				au: node.scrollTop,
-				as: node.clientWidth,
-				aa: node.clientHeight
+			as: {
+				au: node.scrollLeft,
+				av: node.scrollTop,
+				at: node.clientWidth,
+				ab: node.clientHeight
 			}
 		};
 	});
@@ -4324,18 +4324,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			ao: _Browser_getScene(),
-			ar: {
-				at: x,
-				au: y,
-				as: _Browser_doc.documentElement.clientWidth,
-				aa: _Browser_doc.documentElement.clientHeight
+			ap: _Browser_getScene(),
+			as: {
+				au: x,
+				av: y,
+				at: _Browser_doc.documentElement.clientWidth,
+				ab: _Browser_doc.documentElement.clientHeight
 			},
-			aB: {
-				at: x + rect.left,
-				au: y + rect.top,
-				as: rect.width,
-				aa: rect.height
+			aC: {
+				au: x + rect.left,
+				av: y + rect.top,
+				at: rect.width,
+				ab: rect.height
 			}
 		};
 	});
@@ -4859,25 +4859,25 @@ var $elm$core$Array$treeFromBuilder = F2(
 	});
 var $elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.a) {
+		if (!builder.b) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.c),
+				$elm$core$Elm$JsArray$length(builder.d),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.c);
+				builder.d);
 		} else {
-			var treeLen = builder.a * $elm$core$Array$branchFactor;
+			var treeLen = builder.b * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
 				A2($elm$core$Basics$logBase, $elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.d) : builder.d;
-			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.a);
+			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.e) : builder.e;
+			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.b);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.c) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.d) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.c);
+				builder.d);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4890,7 +4890,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{d: nodeList, a: (len / $elm$core$Array$branchFactor) | 0, c: tail});
+					{e: nodeList, b: (len / $elm$core$Array$branchFactor) | 0, d: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -4957,7 +4957,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {_: fragment, ab: host, af: path, ah: port_, ak: protocol, al: query};
+		return {aa: fragment, ac: host, ag: path, ai: port_, al: protocol, am: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5247,8 +5247,10 @@ var $author$project$Main$Model = function (dieFace) {
 						return function (spiritShroud) {
 							return function (spell) {
 								return function (spellslot) {
-									return function (enemyDamaged) {
-										return {q: attack, E: blessedStrikes, az: dieFace, r: enemyDamaged, s: level, B: spell, C: spellslot, v: spiritShroud, w: touchOfDeath, O: weapon};
+									return function (criticalSuccess) {
+										return function (enemyDamaged) {
+											return {r: attack, F: blessedStrikes, l: criticalSuccess, aA: dieFace, s: enemyDamaged, t: level, C: spell, D: spellslot, w: spiritShroud, x: touchOfDeath, P: weapon};
+										};
 									};
 								};
 							};
@@ -5264,7 +5266,7 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		$author$project$Main$Model(1)(1)(0)(false)(0)(true)(false)(0)(1)(false),
+		$author$project$Main$Model(1)(1)(0)(false)(0)(true)(false)(0)(1)(false)(false),
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -5463,7 +5465,7 @@ var $author$project$Main$update = F2(
 			case 1:
 				var newFace = msg.a;
 				return _Utils_Tuple2(
-					$author$project$Main$Model(newFace)(model.s)(model.q)(model.w)(model.O)(model.E)(model.v)(model.B)(model.C)(model.r),
+					$author$project$Main$Model(newFace)(model.t)(model.r)(model.x)(model.P)(model.F)(model.w)(model.C)(model.D)(model.l)(model.s),
 					$elm$core$Platform$Cmd$none);
 			case 2:
 				var level = msg.a;
@@ -5473,7 +5475,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{s: parsedLevel}),
+							{t: parsedLevel}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -5488,19 +5490,19 @@ var $author$project$Main$update = F2(
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
-									{q: attackType}),
+									{r: attackType}),
 								$elm$core$Platform$Cmd$none);
 						case 1:
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
-									{q: attackType, B: 0}),
+									{r: attackType, C: 0}),
 								$elm$core$Platform$Cmd$none);
 						default:
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
-									{q: attackType, B: 1}),
+									{r: attackType, C: 1}),
 								$elm$core$Platform$Cmd$none);
 					}
 				} else {
@@ -5510,7 +5512,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{w: !model.w}),
+						{x: !model.x}),
 					$elm$core$Platform$Cmd$none);
 			case 5:
 				var weapon = msg.a;
@@ -5520,7 +5522,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{O: parsedWeapon}),
+							{P: parsedWeapon}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -5529,13 +5531,13 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{E: !model.E}),
+						{F: !model.F}),
 					$elm$core$Platform$Cmd$none);
 			case 7:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{v: !model.v}),
+						{w: !model.w}),
 					$elm$core$Platform$Cmd$none);
 			case 8:
 				var spell = msg.a;
@@ -5545,7 +5547,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{B: parsedSpell}),
+							{C: parsedSpell}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -5558,16 +5560,22 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{C: parsedSlot}),
+							{D: parsedSlot}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
+			case 10:
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{l: !model.l}),
+					$elm$core$Platform$Cmd$none);
 			default:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{r: !model.r}),
+						{s: !model.s}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
@@ -5583,7 +5591,7 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $author$project$Main$DamageDescriptor = F2(
 	function (amount, damageType) {
-		return {g: amount, f: damageType};
+		return {a: amount, g: damageType};
 	});
 var $author$project$Main$CombinedAmount = F2(
 	function (a, b) {
@@ -5859,16 +5867,16 @@ var $author$project$Main$combineDamageDescriptorsInternal = function (descriptor
 		$elm$core$List$foldl,
 		F2(
 			function (desc, acc) {
-				var currentAmount = A2($elm$core$Dict$get, desc.f, acc);
+				var currentAmount = A2($elm$core$Dict$get, desc.g, acc);
 				if (!currentAmount.$) {
 					var actualAmount = currentAmount.a;
 					return A3(
 						$elm$core$Dict$insert,
-						desc.f,
-						A2($author$project$Main$combineDamageAmounts, actualAmount, desc.g),
+						desc.g,
+						A2($author$project$Main$combineDamageAmounts, actualAmount, desc.a),
 						acc);
 				} else {
-					return A3($elm$core$Dict$insert, desc.f, desc.g, acc);
+					return A3($elm$core$Dict$insert, desc.g, desc.a, acc);
 				}
 			}),
 		$elm$core$Dict$empty,
@@ -5876,8 +5884,8 @@ var $author$project$Main$combineDamageDescriptorsInternal = function (descriptor
 			$elm$core$List$map,
 			function (descriptor) {
 				return {
-					g: descriptor.g,
-					f: $author$project$Main$damageTypeToString(descriptor.f)
+					a: descriptor.a,
+					g: $author$project$Main$damageTypeToString(descriptor.g)
 				};
 			},
 			descriptors));
@@ -5942,6 +5950,31 @@ var $author$project$Main$combineDamageDescriptors = function (descriptors) {
 			$elm$core$Dict$toList(
 				$author$project$Main$combineDamageDescriptorsInternal(descriptors))));
 };
+var $author$project$Main$NoAmount = {$: 0};
+var $author$project$Main$criticalSuccessBonus = function (damageAmount) {
+	switch (damageAmount.$) {
+		case 0:
+			return $author$project$Main$NoAmount;
+		case 1:
+			var factor = damageAmount.a;
+			var dice = damageAmount.b;
+			return A2($author$project$Main$DiceAmount, factor * 2, dice);
+		case 2:
+			var amount = damageAmount.a;
+			var supplement = damageAmount.b;
+			return A2(
+				$author$project$Main$SupplementedAmount,
+				$author$project$Main$criticalSuccessBonus(amount),
+				supplement);
+		default:
+			var amount1 = damageAmount.a;
+			var amount2 = damageAmount.b;
+			return A2(
+				$author$project$Main$CombinedAmount,
+				$author$project$Main$criticalSuccessBonus(amount1),
+				$author$project$Main$criticalSuccessBonus(amount2));
+	}
+};
 var $author$project$Main$D10 = 3;
 var $author$project$Main$D12 = 4;
 var $author$project$Main$D6 = 1;
@@ -5951,91 +5984,120 @@ var $author$project$Main$spellDamageOf = F4(
 		switch (spell) {
 			case 0:
 				return {
-					g: A2($author$project$Main$DiceAmount, 2 + spellslot, 3),
-					f: 0
+					a: A2($author$project$Main$DiceAmount, 2 + spellslot, 3),
+					g: 0
 				};
 			case 1:
 				var diceType = enemyDamaged ? 4 : 2;
 				var diceAmount = (level < 5) ? 2 : ((level < 11) ? 3 : 4);
 				return {
-					g: A2($author$project$Main$DiceAmount, diceAmount, diceType),
-					f: 0
+					a: A2($author$project$Main$DiceAmount, diceAmount, diceType),
+					g: 0
 				};
 			default:
 				return {
-					g: A2($author$project$Main$DiceAmount, spellslot, 1),
-					f: 0
+					a: A2($author$project$Main$DiceAmount, spellslot, 1),
+					g: 0
 				};
 		}
 	});
 var $author$project$Main$spiritShroudBonus = function (spellslot) {
 	return {
-		g: A2($author$project$Main$DiceAmount, 1 + (((spellslot - 3) / 2) | 0), 2),
-		f: 0
+		a: A2($author$project$Main$DiceAmount, 1 + (((spellslot - 3) / 2) | 0), 2),
+		g: 0
 	};
 };
-var $author$project$Main$NoAmount = {$: 0};
 var $author$project$Main$touchOfDeathBonus = function (level) {
 	return {
-		g: A2($author$project$Main$SupplementedAmount, $author$project$Main$NoAmount, 5 + (2 * level)),
-		f: 0
+		a: A2($author$project$Main$SupplementedAmount, $author$project$Main$NoAmount, 5 + (2 * level)),
+		g: 0
 	};
 };
 var $author$project$Main$calculateMeleeSpellAttackDamageDescriptors = function (model) {
 	var spellDamage = $elm$core$Maybe$Just(
-		A4($author$project$Main$spellDamageOf, model.B, model.s, model.C, model.r));
-	var bonusOfTouchOfDeath = model.w ? $elm$core$Maybe$Just(
-		$author$project$Main$touchOfDeathBonus(model.s)) : $elm$core$Maybe$Nothing;
-	var bonusOfSpiritShroud = model.v ? $elm$core$Maybe$Just(
+		A4($author$project$Main$spellDamageOf, model.C, model.t, model.D, model.s));
+	var bonusOfTouchOfDeath = model.x ? $elm$core$Maybe$Just(
+		$author$project$Main$touchOfDeathBonus(model.t)) : $elm$core$Maybe$Nothing;
+	var bonusOfSpiritShroud = model.w ? $elm$core$Maybe$Just(
 		$author$project$Main$spiritShroudBonus(3)) : $elm$core$Maybe$Nothing;
-	return $author$project$Main$combineDamageDescriptors(
-		A2(
-			$elm$core$List$filterMap,
-			$elm$core$Basics$identity,
-			_List_fromArray(
-				[spellDamage, bonusOfTouchOfDeath, bonusOfSpiritShroud])));
+	var bonusOfCriticalSuccess = model.l ? $author$project$Main$criticalSuccessBonus : $elm$core$Basics$identity;
+	return A2(
+		$elm$core$List$map,
+		function (descriptor) {
+			return _Utils_update(
+				descriptor,
+				{
+					a: bonusOfCriticalSuccess(descriptor.a)
+				});
+		},
+		$author$project$Main$combineDamageDescriptors(
+			A2(
+				$elm$core$List$filterMap,
+				$elm$core$Basics$identity,
+				_List_fromArray(
+					[spellDamage, bonusOfTouchOfDeath, bonusOfSpiritShroud]))));
 };
 var $author$project$Main$blessedStrikesBonus = {
-	g: A2($author$project$Main$DiceAmount, 1, 2),
-	f: 0
+	a: A2($author$project$Main$DiceAmount, 1, 2),
+	g: 0
 };
 var $author$project$Main$D4 = 0;
 var $author$project$Main$weaponDamageOf = function (weapon) {
 	return {
-		g: A2(
+		a: A2(
 			$author$project$Main$SupplementedAmount,
 			A2($author$project$Main$DiceAmount, 2, 0),
 			1),
-		f: 2
+		g: 2
 	};
 };
 var $author$project$Main$calculateMeleeWeaponAttackDamageDescriptors = function (model) {
 	var weaponDamage = $elm$core$Maybe$Just(
-		$author$project$Main$weaponDamageOf(model.O));
-	var bonusOfTouchOfDeath = model.w ? $elm$core$Maybe$Just(
-		$author$project$Main$touchOfDeathBonus(model.s)) : $elm$core$Maybe$Nothing;
-	var bonusOfSpiritShroud = model.v ? $elm$core$Maybe$Just(
+		$author$project$Main$weaponDamageOf(model.P));
+	var bonusOfTouchOfDeath = model.x ? $elm$core$Maybe$Just(
+		$author$project$Main$touchOfDeathBonus(model.t)) : $elm$core$Maybe$Nothing;
+	var bonusOfSpiritShroud = model.w ? $elm$core$Maybe$Just(
 		$author$project$Main$spiritShroudBonus(3)) : $elm$core$Maybe$Nothing;
-	var bonusOfBlessedStrikes = model.E ? $elm$core$Maybe$Just($author$project$Main$blessedStrikesBonus) : $elm$core$Maybe$Nothing;
-	return $author$project$Main$combineDamageDescriptors(
-		A2(
-			$elm$core$List$filterMap,
-			$elm$core$Basics$identity,
-			_List_fromArray(
-				[weaponDamage, bonusOfTouchOfDeath, bonusOfBlessedStrikes, bonusOfSpiritShroud])));
+	var bonusOfCriticalSuccess = model.l ? $author$project$Main$criticalSuccessBonus : $elm$core$Basics$identity;
+	var bonusOfBlessedStrikes = model.F ? $elm$core$Maybe$Just($author$project$Main$blessedStrikesBonus) : $elm$core$Maybe$Nothing;
+	return A2(
+		$elm$core$List$map,
+		function (descriptor) {
+			return _Utils_update(
+				descriptor,
+				{
+					a: bonusOfCriticalSuccess(descriptor.a)
+				});
+		},
+		$author$project$Main$combineDamageDescriptors(
+			A2(
+				$elm$core$List$filterMap,
+				$elm$core$Basics$identity,
+				_List_fromArray(
+					[weaponDamage, bonusOfTouchOfDeath, bonusOfBlessedStrikes, bonusOfSpiritShroud]))));
 };
 var $author$project$Main$calculateRangedSpellAttackDamageDescriptors = function (model) {
 	var spellDamage = $elm$core$Maybe$Just(
-		A4($author$project$Main$spellDamageOf, model.B, model.s, model.C, model.r));
-	return $author$project$Main$combineDamageDescriptors(
-		A2(
-			$elm$core$List$filterMap,
-			$elm$core$Basics$identity,
-			_List_fromArray(
-				[spellDamage])));
+		A4($author$project$Main$spellDamageOf, model.C, model.t, model.D, model.s));
+	var bonusOfCriticalSuccess = model.l ? $author$project$Main$criticalSuccessBonus : $elm$core$Basics$identity;
+	return A2(
+		$elm$core$List$map,
+		function (descriptor) {
+			return _Utils_update(
+				descriptor,
+				{
+					a: bonusOfCriticalSuccess(descriptor.a)
+				});
+		},
+		$author$project$Main$combineDamageDescriptors(
+			A2(
+				$elm$core$List$filterMap,
+				$elm$core$Basics$identity,
+				_List_fromArray(
+					[spellDamage]))));
 };
 var $author$project$Main$calculateDamageDescriptors = function (model) {
-	var _v0 = model.q;
+	var _v0 = model.r;
 	switch (_v0) {
 		case 0:
 			return $author$project$Main$calculateMeleeWeaponAttackDamageDescriptors(model);
@@ -6147,34 +6209,51 @@ var $elm$core$List$intersperse = F2(
 			return A2($elm$core$List$cons, hd, spersed);
 		}
 	});
+var $elm$html$Html$label = _VirtualDom_node('label');
 var $author$project$Main$damageDescriptorView = function (model) {
 	return A2(
 		$elm$html$Html$div,
+		_List_Nil,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('damage-descriptors')
-			]),
-		A2(
-			$elm$core$List$intersperse,
-			$elm$html$Html$text(' + '),
-			A2(
-				$elm$core$List$map,
-				function (descriptor) {
-					return A2(
-						$elm$html$Html$span,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('damage-descriptor label')
-							]),
-						_List_fromArray(
-							[
-								$author$project$Main$damageAmountView(descriptor.g),
-								$elm$html$Html$text(' '),
-								$elm$html$Html$text(
-								$author$project$Main$damageTypeToString(descriptor.f))
-							]));
-				},
-				$author$project$Main$calculateDamageDescriptors(model))));
+				A2(
+				$elm$html$Html$label,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('bold')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Resulting Damage')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('damage-descriptors')
+					]),
+				A2(
+					$elm$core$List$intersperse,
+					$elm$html$Html$text(' + '),
+					A2(
+						$elm$core$List$map,
+						function (descriptor) {
+							return A2(
+								$elm$html$Html$span,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('damage-descriptor label')
+									]),
+								_List_fromArray(
+									[
+										$author$project$Main$damageAmountView(descriptor.a),
+										$elm$html$Html$text(' '),
+										$elm$html$Html$text(
+										$author$project$Main$damageTypeToString(descriptor.g))
+									]));
+						},
+						$author$project$Main$calculateDamageDescriptors(model))))
+			]));
 };
 var $author$project$Main$meleeSpells = _List_fromArray(
 	[0, 2]);
@@ -6195,7 +6274,6 @@ var $author$project$Main$attackTypeToString = function (attackType) {
 };
 var $author$project$Main$attackTypes = _List_fromArray(
 	[0, 1, 2]);
-var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
@@ -6437,8 +6515,38 @@ var $author$project$Main$checkBlessedStrikes = function (isActive) {
 					]))
 			]));
 };
-var $author$project$Main$EnemyDamagedToggled = function (a) {
+var $author$project$Main$CriticalSuccessToggled = function (a) {
 	return {$: 10, a: a};
+};
+var $author$project$Main$checkCriticalSuccess = function (isActive) {
+	return A2(
+		$elm$html$Html$label,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$input,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$type_('checkbox'),
+						$elm$html$Html$Attributes$checked(isActive),
+						$elm$html$Html$Events$onCheck($author$project$Main$CriticalSuccessToggled)
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$span,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('checkable')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text(' Critical Success')
+					]))
+			]));
+};
+var $author$project$Main$EnemyDamagedToggled = function (a) {
+	return {$: 11, a: a};
 };
 var $author$project$Main$checkEnemyDamaged = function (isActive) {
 	return A2(
@@ -6547,26 +6655,29 @@ var $author$project$Main$setModifiers = function (model) {
 						$elm$html$Html$Attributes$class('card padding')
 					]),
 				function () {
-					var _v0 = model.q;
+					var _v0 = model.r;
 					switch (_v0) {
 						case 0:
 							return _List_fromArray(
 								[
-									$author$project$Main$checkTouchOfDeath(model.w),
-									$author$project$Main$checkBlessedStrikes(model.E),
-									$author$project$Main$checkSpiritShroud(model.v)
+									$author$project$Main$checkCriticalSuccess(model.l),
+									$author$project$Main$checkTouchOfDeath(model.x),
+									$author$project$Main$checkBlessedStrikes(model.F),
+									$author$project$Main$checkSpiritShroud(model.w)
 								]);
 						case 1:
 							return _List_fromArray(
 								[
-									$author$project$Main$checkTouchOfDeath(model.w),
-									$author$project$Main$checkEnemyDamaged(model.r),
-									$author$project$Main$checkSpiritShroud(model.v)
+									$author$project$Main$checkCriticalSuccess(model.l),
+									$author$project$Main$checkTouchOfDeath(model.x),
+									$author$project$Main$checkEnemyDamaged(model.s),
+									$author$project$Main$checkSpiritShroud(model.w)
 								]);
 						default:
 							return _List_fromArray(
 								[
-									$author$project$Main$checkEnemyDamaged(model.r)
+									$author$project$Main$checkCriticalSuccess(model.l),
+									$author$project$Main$checkEnemyDamaged(model.s)
 								]);
 					}
 				}())
@@ -6596,7 +6707,7 @@ var $author$project$Main$setSpellSlot = function (slot) {
 					[
 						$elm$html$Html$Attributes$class('spellslot'),
 						$elm$html$Html$Attributes$type_('range'),
-						$elm$html$Html$Attributes$min('1'),
+						$elm$html$Html$Attributes$min('0'),
 						$elm$html$Html$Attributes$max('10'),
 						$elm$html$Html$Events$onInput($author$project$Main$SpellslotChanged),
 						$elm$html$Html$Attributes$value(
@@ -6614,10 +6725,10 @@ var $author$project$Main$view = function (model) {
 			]),
 		_List_fromArray(
 			[
-				$author$project$Main$setLevel(model.s),
+				$author$project$Main$setLevel(model.t),
 				$author$project$Main$selectAttackType,
 				function () {
-				var _v0 = model.q;
+				var _v0 = model.r;
 				switch (_v0) {
 					case 0:
 						return A2(
@@ -6635,7 +6746,7 @@ var $author$project$Main$view = function (model) {
 							_List_fromArray(
 								[
 									$author$project$Main$selectSpell($author$project$Main$meleeSpells),
-									$author$project$Main$setSpellSlot(model.C),
+									$author$project$Main$setSpellSlot(model.D),
 									$author$project$Main$setModifiers(model)
 								]));
 					default:
@@ -6645,7 +6756,7 @@ var $author$project$Main$view = function (model) {
 							_List_fromArray(
 								[
 									$author$project$Main$selectSpell($author$project$Main$rangedSpells),
-									$author$project$Main$setSpellSlot(model.C),
+									$author$project$Main$setSpellSlot(model.D),
 									$author$project$Main$setModifiers(model)
 								]));
 				}
@@ -6654,6 +6765,6 @@ var $author$project$Main$view = function (model) {
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{aF: $author$project$Main$init, aL: $author$project$Main$subscriptions, aN: $author$project$Main$update, aO: $author$project$Main$view});
+	{aG: $author$project$Main$init, aM: $author$project$Main$subscriptions, aO: $author$project$Main$update, aP: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
