@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DnDculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <style>
+        body {
+            font-size: 3.5vw;
+        }
+        span.damage-descriptor {
+            font-size: 3.5vw;
+            margin-left: initial;
+        }
+        article.margin {
+            margin: 1em;
+        }
+        article.padding {
+            padding: 1em;
+        }
+    </style>
+    <script src="./dist/elm.js"></script>
+</head>
+<body>
+    <div id="app"/>
+    <script>
+        var app = Elm.Main.init({
+            node: document.getElementById('app')
+        });
+  </script>
+</body>
+</html>

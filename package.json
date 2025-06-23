@@ -1,0 +1,16 @@
+{
+  "name": "dndculator",
+  "version": "0.1.0",
+  "description": "Calculate Damage Rolls for a DnD Death Cleric",
+  "license": "ISC",
+  "author": "Alexander Schramm",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "watch-elm": "nodemon --watch src --ext elm --exec elm make src/Main.elm --optimize --output=dist/elm.js"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.10",
+    "typescript": "^5.8.3"
+  }
+}
