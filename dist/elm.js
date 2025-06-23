@@ -6344,6 +6344,8 @@ var $author$project$Main$LevelChanged = function (a) {
 	return {$: 2, a: a};
 };
 var $elm$html$Html$input = _VirtualDom_node('input');
+var $elm$html$Html$Attributes$max = $elm$html$Html$Attributes$stringProperty('max');
+var $elm$html$Html$Attributes$min = $elm$html$Html$Attributes$stringProperty('min');
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $author$project$Main$setLevel = function (level) {
 	return A2(
@@ -6356,13 +6358,17 @@ var $author$project$Main$setLevel = function (level) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Cleric Class Level')
+						$elm$html$Html$text('Cleric Class Level: '),
+						$elm$html$Html$text(
+						$elm$core$String$fromInt(level))
 					])),
 				A2(
 				$elm$html$Html$input,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$type_('number'),
+						$elm$html$Html$Attributes$type_('range'),
+						$elm$html$Html$Attributes$min('1'),
+						$elm$html$Html$Attributes$max('20'),
 						$elm$html$Html$Attributes$value(
 						$elm$core$String$fromInt(level)),
 						$elm$html$Html$Events$onInput($author$project$Main$LevelChanged)
@@ -6580,14 +6586,18 @@ var $author$project$Main$setSpellSlot = function (slot) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Spell Slot')
+						$elm$html$Html$text('Spell Slot: '),
+						$elm$html$Html$text(
+						$elm$core$String$fromInt(slot))
 					])),
 				A2(
 				$elm$html$Html$input,
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('spellslot'),
-						$elm$html$Html$Attributes$type_('number'),
+						$elm$html$Html$Attributes$type_('range'),
+						$elm$html$Html$Attributes$min('1'),
+						$elm$html$Html$Attributes$max('10'),
 						$elm$html$Html$Events$onInput($author$project$Main$SpellslotChanged),
 						$elm$html$Html$Attributes$value(
 						$elm$core$String$fromInt(slot))

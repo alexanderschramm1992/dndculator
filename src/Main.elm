@@ -3,7 +3,7 @@ module Main exposing (..)
 import Dict exposing (Dict)
 import Browser
 import Html exposing (..)
-import Html.Attributes exposing (class, value, type_, checked)
+import Html.Attributes exposing (class, value, type_, checked, min, max)
 import Html.Events exposing (..)
 import Random
 
@@ -317,9 +317,13 @@ view model =
 
 setLevel: Int -> Html Msg
 setLevel level = div [] 
-  [ label [] [ text "Cleric Class Level" ]
+  [ label [] 
+  [ text "Cleric Class Level: " 
+  , level |> String.fromInt |> text ]
   , input
-    [ type_ "number"
+    [ type_ "range"
+    , Html.Attributes.min "1"
+    , Html.Attributes.max "20"
     , level |> String.fromInt |> value
     , onInput LevelChanged ] [] ]
 
@@ -376,10 +380,14 @@ selectSpell spells = div []
 
 setSpellSlot: Int -> Html Msg
 setSpellSlot slot = div []
-  [ label [] [ text "Spell Slot" ]
+  [ label [] 
+    [ text "Spell Slot: " 
+    , slot |> String.fromInt |> text ]
   , input
     [ class "spellslot"
-    , type_ "number" 
+    , type_ "range"
+    , Html.Attributes.min "1"
+    , Html.Attributes.max "10" 
     , onInput SpellslotChanged 
     , slot |> String.fromInt |> value ] [] ]
 
