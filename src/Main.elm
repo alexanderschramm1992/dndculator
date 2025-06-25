@@ -79,33 +79,56 @@ spiritShroudBonus spellslot =
   , damageType = Necrotic }
 
 type Spell 
-  = InflictWounds
+  = Blight
+  | InflictWounds
+  | InsectPlague
+  | ThornWhip
   | TollTheDead
   | VampiricTouch
 meleeSpells: List Spell
-meleeSpells = [ InflictWounds, VampiricTouch ]
+meleeSpells = [ InflictWounds, ThornWhip, VampiricTouch ]
 rangedSpells: List Spell
-rangedSpells = [ TollTheDead ]
+rangedSpells = [ Blight, InsectPlague, TollTheDead ]
 spellDamageOf: Spell -> Int -> Int -> Bool -> DamageDescriptor
 spellDamageOf spell level spellslot enemyDamaged = case spell of
-    InflictWounds -> 
-      { amount = DiceAmount (2 + spellslot) D10
-      , damageType = Necrotic }
-    TollTheDead -> 
-      let
-        diceType = if enemyDamaged then D12 else D8
-        diceAmount = if (level < 5) then 2 else if (level < 11) then 3 else 4
-      in { amount = DiceAmount diceAmount diceType, damageType = Necrotic}
-    VampiricTouch ->
-      { amount = DiceAmount spellslot D6, damageType = Necrotic}
+  Blight ->
+    { amount = if (spellslot < 4) then NoAmount else DiceAmount (spellslot + 4) D8
+    , damageType = Necrotic }
+  InflictWounds -> 
+    { amount = if (spellslot < 1) then NoAmount else DiceAmount (spellslot + 2) D10
+    , damageType = Necrotic }
+  InsectPlague -> 
+    { amount = if (spellslot < 5) then NoAmount else DiceAmount (spellslot - 1) D10
+    , damageType = Piercing }
+  ThornWhip -> 
+    { amount = if (spellslot < 1) then NoAmount
+      else if (level < 5) then (DiceAmount 1 D6) 
+      else if (level < 11) then (DiceAmount 2 D6)
+      else if (level < 17) then (DiceAmount 3 D6)
+      else (DiceAmount 4 D6) 
+    , damageType = Piercing }
+  TollTheDead -> 
+    let
+      diceType = if enemyDamaged then D12 else D8
+      diceAmount = if (level < 5) then 2 else if (level < 11) then 3 else 4
+    in { amount = DiceAmount diceAmount diceType, damageType = Necrotic}
+  VampiricTouch ->
+    { amount = if (spellslot < 3) then NoAmount else DiceAmount spellslot D6
+    , damageType = Necrotic }
 spellToString: Spell -> String
 spellToString spell = case spell of
+    Blight -> "Blight"
     InflictWounds -> "Inflict Wounds"
+    InsectPlague -> "Insect Plague"
+    ThornWhip -> "Thorn Whip"
     TollTheDead -> "Toll the Dead"
     VampiricTouch -> "Vampiric Touch"
 spellFromString: String -> Maybe Spell
 spellFromString spell = case spell of
+    "Blight" -> Just Blight
     "Inflict Wounds" -> Just InflictWounds
+    "Insect Plague" -> Just InsectPlague
+    "Thorn Whip" -> Just ThornWhip
     "Toll the Dead" -> Just TollTheDead
     "Vampiric Touch" -> Just VampiricTouch
     _ -> Nothing
@@ -126,17 +149,20 @@ diceTypeToString dice = case dice of
 
 type DamageType
   = Necrotic
+  | Piercing
   | Poison
   | Slashing
 damageTypeToString: DamageType -> String
 damageTypeToString damageType = case damageType of
-    Necrotic -> "Necrotic"
-    Poison -> "Poison"
-    Slashing -> "Slashing"
+  Piercing -> "Piercing"
+  Poison -> "Poison"
+  Necrotic -> "Necrotic"
+  Slashing -> "Slashing"
 damageTypeFromString: String -> Maybe DamageType
 damageTypeFromString damageType = case damageType of
-  "Necrotic" -> Just Necrotic
+  "Piercing" -> Just Piercing
   "Poison" -> Just Poison
+  "Necrotic" -> Just Necrotic
   "Slashing" -> Just Slashing
   _ -> Nothing
 
@@ -288,7 +314,7 @@ update msg model =
             , spell = InflictWounds }, Cmd.none )
           RangedSpellAttack -> ( { model 
             | attack = attackType
-            , spell = TollTheDead }, Cmd.none )
+            , spell = Blight }, Cmd.none )
         Nothing -> ( model, Cmd.none )
     TouchOfDeathToggled _ -> ( { model | touchOfDeath = not model.touchOfDeath }, Cmd.none )
     WeaponChanged weapon -> case weaponFromString weapon of
@@ -322,11 +348,11 @@ view model =
           [ selectWeapon
           , setModifiers model ]
         MeleeSpellAttack -> div [] 
-          [ selectSpell meleeSpells
+          [ selectSpell model.spell meleeSpells
           , setSpellSlot model.spellslot
           , setModifiers model ]
         RangedSpellAttack -> div [] 
-          [ selectSpell rangedSpells
+          [ selectSpell model.spell rangedSpells
           , setSpellSlot model.spellslot
           , setModifiers model ]
     , damageDescriptorView model ]
@@ -386,12 +412,13 @@ checkSpiritShroud isActive = label []
       , onCheck SpiritShroudToggled ] []
   , span [ class "checkable" ] [ text " Spirit Shroud" ] ]
 
-selectSpell: List Spell -> Html Msg
-selectSpell spells = div []
+selectSpell: Spell -> List Spell -> Html Msg
+selectSpell currentSpell spells = div []
   [ label [] [ text "Spell" ]
   , select 
     [ class "spell"
-    , onInput SpellChanged ] 
+    , onInput SpellChanged
+    , currentSpell |> spellToString |> value ] 
     ( spells |> List.map spellToString |> List.map toOption ) ]
 
 setSpellSlot: Int -> Html Msg

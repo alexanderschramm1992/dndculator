@@ -2719,7 +2719,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		u: func(record.u),
+		v: func(record.v),
 		V: record.V,
 		S: record.S
 	}
@@ -2989,7 +2989,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.u;
+		var message = !tag ? value : tag < 3 ? value.a : value.v;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.V;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -4870,7 +4870,7 @@ var $elm$core$Array$builderToArray = F2(
 			var treeLen = builder.b * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
 				A2($elm$core$Basics$logBase, $elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.e) : builder.e;
+			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.f) : builder.f;
 			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.b);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
@@ -4890,7 +4890,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{e: nodeList, b: (len / $elm$core$Array$branchFactor) | 0, d: tail});
+					{f: nodeList, b: (len / $elm$core$Array$branchFactor) | 0, d: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -5236,7 +5236,7 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Main$InflictWounds = 0;
+var $author$project$Main$InflictWounds = 1;
 var $author$project$Main$MeleeWeaponAttack = 0;
 var $author$project$Main$Model = function (dieFace) {
 	return function (level) {
@@ -5249,7 +5249,7 @@ var $author$project$Main$Model = function (dieFace) {
 								return function (spellslot) {
 									return function (criticalSuccess) {
 										return function (enemyDamaged) {
-											return {r: attack, F: blessedStrikes, l: criticalSuccess, aA: dieFace, s: enemyDamaged, t: level, C: spell, D: spellslot, w: spiritShroud, x: touchOfDeath, P: weapon};
+											return {s: attack, F: blessedStrikes, l: criticalSuccess, aA: dieFace, t: enemyDamaged, u: level, p: spell, D: spellslot, x: spiritShroud, y: touchOfDeath, P: weapon};
 										};
 									};
 								};
@@ -5266,7 +5266,7 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		$author$project$Main$Model(1)(1)(0)(false)(0)(true)(false)(0)(1)(false)(false),
+		$author$project$Main$Model(1)(1)(0)(false)(0)(true)(false)(1)(1)(false)(false),
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -5274,10 +5274,10 @@ var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
+var $author$project$Main$Blight = 0;
 var $author$project$Main$NewFace = function (a) {
 	return {$: 1, a: a};
 };
-var $author$project$Main$TollTheDead = 1;
 var $author$project$Main$MeleeSpellAttack = 1;
 var $author$project$Main$RangedSpellAttack = 2;
 var $author$project$Main$attackTypeFromString = function (string) {
@@ -5432,15 +5432,24 @@ var $elm$random$Random$int = F2(
 		};
 	});
 var $elm$core$Basics$not = _Basics_not;
-var $author$project$Main$VampiricTouch = 2;
+var $author$project$Main$InsectPlague = 2;
+var $author$project$Main$ThornWhip = 3;
+var $author$project$Main$TollTheDead = 4;
+var $author$project$Main$VampiricTouch = 5;
 var $author$project$Main$spellFromString = function (spell) {
 	switch (spell) {
-		case 'Inflict Wounds':
+		case 'Blight':
 			return $elm$core$Maybe$Just(0);
-		case 'Toll the Dead':
+		case 'Inflict Wounds':
 			return $elm$core$Maybe$Just(1);
-		case 'Vampiric Touch':
+		case 'Insect Plague':
 			return $elm$core$Maybe$Just(2);
+		case 'Thorn Whip':
+			return $elm$core$Maybe$Just(3);
+		case 'Toll the Dead':
+			return $elm$core$Maybe$Just(4);
+		case 'Vampiric Touch':
+			return $elm$core$Maybe$Just(5);
 		default:
 			return $elm$core$Maybe$Nothing;
 	}
@@ -5465,7 +5474,7 @@ var $author$project$Main$update = F2(
 			case 1:
 				var newFace = msg.a;
 				return _Utils_Tuple2(
-					$author$project$Main$Model(newFace)(model.t)(model.r)(model.x)(model.P)(model.F)(model.w)(model.C)(model.D)(model.l)(model.s),
+					$author$project$Main$Model(newFace)(model.u)(model.s)(model.y)(model.P)(model.F)(model.x)(model.p)(model.D)(model.l)(model.t),
 					$elm$core$Platform$Cmd$none);
 			case 2:
 				var level = msg.a;
@@ -5475,7 +5484,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{t: parsedLevel}),
+							{u: parsedLevel}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -5490,19 +5499,19 @@ var $author$project$Main$update = F2(
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
-									{r: attackType}),
+									{s: attackType}),
 								$elm$core$Platform$Cmd$none);
 						case 1:
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
-									{r: attackType, C: 0}),
+									{s: attackType, p: 1}),
 								$elm$core$Platform$Cmd$none);
 						default:
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
-									{r: attackType, C: 1}),
+									{s: attackType, p: 0}),
 								$elm$core$Platform$Cmd$none);
 					}
 				} else {
@@ -5512,7 +5521,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{x: !model.x}),
+						{y: !model.y}),
 					$elm$core$Platform$Cmd$none);
 			case 5:
 				var weapon = msg.a;
@@ -5537,7 +5546,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{w: !model.w}),
+						{x: !model.x}),
 					$elm$core$Platform$Cmd$none);
 			case 8:
 				var spell = msg.a;
@@ -5547,7 +5556,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{C: parsedSpell}),
+							{p: parsedSpell}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -5575,7 +5584,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{s: !model.s}),
+						{t: !model.t}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
@@ -5591,7 +5600,7 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $author$project$Main$DamageDescriptor = F2(
 	function (amount, damageType) {
-		return {a: amount, g: damageType};
+		return {a: amount, e: damageType};
 	});
 var $author$project$Main$CombinedAmount = F2(
 	function (a, b) {
@@ -5712,10 +5721,12 @@ var $author$project$Main$combineDamageAmounts = F2(
 	});
 var $author$project$Main$damageTypeToString = function (damageType) {
 	switch (damageType) {
+		case 1:
+			return 'Piercing';
+		case 2:
+			return 'Poison';
 		case 0:
 			return 'Necrotic';
-		case 1:
-			return 'Poison';
 		default:
 			return 'Slashing';
 	}
@@ -5867,16 +5878,16 @@ var $author$project$Main$combineDamageDescriptorsInternal = function (descriptor
 		$elm$core$List$foldl,
 		F2(
 			function (desc, acc) {
-				var currentAmount = A2($elm$core$Dict$get, desc.g, acc);
+				var currentAmount = A2($elm$core$Dict$get, desc.e, acc);
 				if (!currentAmount.$) {
 					var actualAmount = currentAmount.a;
 					return A3(
 						$elm$core$Dict$insert,
-						desc.g,
+						desc.e,
 						A2($author$project$Main$combineDamageAmounts, actualAmount, desc.a),
 						acc);
 				} else {
-					return A3($elm$core$Dict$insert, desc.g, desc.a, acc);
+					return A3($elm$core$Dict$insert, desc.e, desc.a, acc);
 				}
 			}),
 		$elm$core$Dict$empty,
@@ -5885,22 +5896,25 @@ var $author$project$Main$combineDamageDescriptorsInternal = function (descriptor
 			function (descriptor) {
 				return {
 					a: descriptor.a,
-					g: $author$project$Main$damageTypeToString(descriptor.g)
+					e: $author$project$Main$damageTypeToString(descriptor.e)
 				};
 			},
 			descriptors));
 };
 var $author$project$Main$Necrotic = 0;
-var $author$project$Main$Poison = 1;
-var $author$project$Main$Slashing = 2;
+var $author$project$Main$Piercing = 1;
+var $author$project$Main$Poison = 2;
+var $author$project$Main$Slashing = 3;
 var $author$project$Main$damageTypeFromString = function (damageType) {
 	switch (damageType) {
+		case 'Piercing':
+			return $elm$core$Maybe$Just(1);
+		case 'Poison':
+			return $elm$core$Maybe$Just(2);
 		case 'Necrotic':
 			return $elm$core$Maybe$Just(0);
-		case 'Poison':
-			return $elm$core$Maybe$Just(1);
 		case 'Slashing':
-			return $elm$core$Maybe$Just(2);
+			return $elm$core$Maybe$Just(3);
 		default:
 			return $elm$core$Maybe$Nothing;
 	}
@@ -5984,41 +5998,56 @@ var $author$project$Main$spellDamageOf = F4(
 		switch (spell) {
 			case 0:
 				return {
-					a: A2($author$project$Main$DiceAmount, 2 + spellslot, 3),
-					g: 0
+					a: (spellslot < 4) ? $author$project$Main$NoAmount : A2($author$project$Main$DiceAmount, spellslot + 4, 2),
+					e: 0
 				};
 			case 1:
+				return {
+					a: (spellslot < 1) ? $author$project$Main$NoAmount : A2($author$project$Main$DiceAmount, spellslot + 2, 3),
+					e: 0
+				};
+			case 2:
+				return {
+					a: (spellslot < 5) ? $author$project$Main$NoAmount : A2($author$project$Main$DiceAmount, spellslot - 1, 3),
+					e: 1
+				};
+			case 3:
+				return {
+					a: (spellslot < 1) ? $author$project$Main$NoAmount : ((level < 5) ? A2($author$project$Main$DiceAmount, 1, 1) : ((level < 11) ? A2($author$project$Main$DiceAmount, 2, 1) : ((level < 17) ? A2($author$project$Main$DiceAmount, 3, 1) : A2($author$project$Main$DiceAmount, 4, 1)))),
+					e: 1
+				};
+			case 4:
 				var diceType = enemyDamaged ? 4 : 2;
 				var diceAmount = (level < 5) ? 2 : ((level < 11) ? 3 : 4);
 				return {
 					a: A2($author$project$Main$DiceAmount, diceAmount, diceType),
-					g: 0
+					e: 0
 				};
 			default:
 				return {
-					a: A2($author$project$Main$DiceAmount, spellslot, 1),
-					g: 0
+					a: (spellslot < 3) ? $author$project$Main$NoAmount : A2($author$project$Main$DiceAmount, spellslot, 1),
+					e: 0
 				};
 		}
 	});
 var $author$project$Main$spiritShroudBonus = function (spellslot) {
 	return {
 		a: A2($author$project$Main$DiceAmount, 1 + (((spellslot - 3) / 2) | 0), 2),
-		g: 0
+		e: 0
 	};
 };
 var $author$project$Main$touchOfDeathBonus = function (level) {
 	return {
 		a: A2($author$project$Main$SupplementedAmount, $author$project$Main$NoAmount, 5 + (2 * level)),
-		g: 0
+		e: 0
 	};
 };
 var $author$project$Main$calculateMeleeSpellAttackDamageDescriptors = function (model) {
 	var spellDamage = $elm$core$Maybe$Just(
-		A4($author$project$Main$spellDamageOf, model.C, model.t, model.D, model.s));
-	var bonusOfTouchOfDeath = model.x ? $elm$core$Maybe$Just(
-		$author$project$Main$touchOfDeathBonus(model.t)) : $elm$core$Maybe$Nothing;
-	var bonusOfSpiritShroud = model.w ? $elm$core$Maybe$Just(
+		A4($author$project$Main$spellDamageOf, model.p, model.u, model.D, model.t));
+	var bonusOfTouchOfDeath = model.y ? $elm$core$Maybe$Just(
+		$author$project$Main$touchOfDeathBonus(model.u)) : $elm$core$Maybe$Nothing;
+	var bonusOfSpiritShroud = model.x ? $elm$core$Maybe$Just(
 		$author$project$Main$spiritShroudBonus(3)) : $elm$core$Maybe$Nothing;
 	var bonusOfCriticalSuccess = model.l ? $author$project$Main$criticalSuccessBonus : $elm$core$Basics$identity;
 	return A2(
@@ -6039,7 +6068,7 @@ var $author$project$Main$calculateMeleeSpellAttackDamageDescriptors = function (
 };
 var $author$project$Main$blessedStrikesBonus = {
 	a: A2($author$project$Main$DiceAmount, 1, 2),
-	g: 0
+	e: 0
 };
 var $author$project$Main$D4 = 0;
 var $author$project$Main$weaponDamageOf = function (weapon) {
@@ -6048,15 +6077,15 @@ var $author$project$Main$weaponDamageOf = function (weapon) {
 			$author$project$Main$SupplementedAmount,
 			A2($author$project$Main$DiceAmount, 2, 0),
 			1),
-		g: 2
+		e: 3
 	};
 };
 var $author$project$Main$calculateMeleeWeaponAttackDamageDescriptors = function (model) {
 	var weaponDamage = $elm$core$Maybe$Just(
 		$author$project$Main$weaponDamageOf(model.P));
-	var bonusOfTouchOfDeath = model.x ? $elm$core$Maybe$Just(
-		$author$project$Main$touchOfDeathBonus(model.t)) : $elm$core$Maybe$Nothing;
-	var bonusOfSpiritShroud = model.w ? $elm$core$Maybe$Just(
+	var bonusOfTouchOfDeath = model.y ? $elm$core$Maybe$Just(
+		$author$project$Main$touchOfDeathBonus(model.u)) : $elm$core$Maybe$Nothing;
+	var bonusOfSpiritShroud = model.x ? $elm$core$Maybe$Just(
 		$author$project$Main$spiritShroudBonus(3)) : $elm$core$Maybe$Nothing;
 	var bonusOfCriticalSuccess = model.l ? $author$project$Main$criticalSuccessBonus : $elm$core$Basics$identity;
 	var bonusOfBlessedStrikes = model.F ? $elm$core$Maybe$Just($author$project$Main$blessedStrikesBonus) : $elm$core$Maybe$Nothing;
@@ -6078,7 +6107,7 @@ var $author$project$Main$calculateMeleeWeaponAttackDamageDescriptors = function 
 };
 var $author$project$Main$calculateRangedSpellAttackDamageDescriptors = function (model) {
 	var spellDamage = $elm$core$Maybe$Just(
-		A4($author$project$Main$spellDamageOf, model.C, model.t, model.D, model.s));
+		A4($author$project$Main$spellDamageOf, model.p, model.u, model.D, model.t));
 	var bonusOfCriticalSuccess = model.l ? $author$project$Main$criticalSuccessBonus : $elm$core$Basics$identity;
 	return A2(
 		$elm$core$List$map,
@@ -6097,7 +6126,7 @@ var $author$project$Main$calculateRangedSpellAttackDamageDescriptors = function 
 					[spellDamage]))));
 };
 var $author$project$Main$calculateDamageDescriptors = function (model) {
-	var _v0 = model.r;
+	var _v0 = model.s;
 	switch (_v0) {
 		case 0:
 			return $author$project$Main$calculateMeleeWeaponAttackDamageDescriptors(model);
@@ -6249,16 +6278,16 @@ var $author$project$Main$damageDescriptorView = function (model) {
 										$author$project$Main$damageAmountView(descriptor.a),
 										$elm$html$Html$text(' '),
 										$elm$html$Html$text(
-										$author$project$Main$damageTypeToString(descriptor.g))
+										$author$project$Main$damageTypeToString(descriptor.e))
 									]));
 						},
 						$author$project$Main$calculateDamageDescriptors(model))))
 			]));
 };
 var $author$project$Main$meleeSpells = _List_fromArray(
-	[0, 2]);
+	[1, 3, 5]);
 var $author$project$Main$rangedSpells = _List_fromArray(
-	[1]);
+	[0, 2, 4]);
 var $author$project$Main$AttackTypeChanged = function (a) {
 	return {$: 3, a: a};
 };
@@ -6353,39 +6382,48 @@ var $author$project$Main$SpellChanged = function (a) {
 var $author$project$Main$spellToString = function (spell) {
 	switch (spell) {
 		case 0:
-			return 'Inflict Wounds';
+			return 'Blight';
 		case 1:
+			return 'Inflict Wounds';
+		case 2:
+			return 'Insect Plague';
+		case 3:
+			return 'Thorn Whip';
+		case 4:
 			return 'Toll the Dead';
 		default:
 			return 'Vampiric Touch';
 	}
 };
-var $author$project$Main$selectSpell = function (spells) {
-	return A2(
-		$elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				$elm$html$Html$label,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Spell')
-					])),
-				A2(
-				$elm$html$Html$select,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('spell'),
-						$elm$html$Html$Events$onInput($author$project$Main$SpellChanged)
-					]),
-				A2(
-					$elm$core$List$map,
-					$author$project$Main$toOption,
-					A2($elm$core$List$map, $author$project$Main$spellToString, spells)))
-			]));
-};
+var $author$project$Main$selectSpell = F2(
+	function (currentSpell, spells) {
+		return A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$label,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Spell')
+						])),
+					A2(
+					$elm$html$Html$select,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('spell'),
+							$elm$html$Html$Events$onInput($author$project$Main$SpellChanged),
+							$elm$html$Html$Attributes$value(
+							$author$project$Main$spellToString(currentSpell))
+						]),
+					A2(
+						$elm$core$List$map,
+						$author$project$Main$toOption,
+						A2($elm$core$List$map, $author$project$Main$spellToString, spells)))
+				]));
+	});
 var $author$project$Main$WeaponChanged = function (a) {
 	return {$: 5, a: a};
 };
@@ -6655,29 +6693,29 @@ var $author$project$Main$setModifiers = function (model) {
 						$elm$html$Html$Attributes$class('card padding')
 					]),
 				function () {
-					var _v0 = model.r;
+					var _v0 = model.s;
 					switch (_v0) {
 						case 0:
 							return _List_fromArray(
 								[
 									$author$project$Main$checkCriticalSuccess(model.l),
-									$author$project$Main$checkTouchOfDeath(model.x),
+									$author$project$Main$checkTouchOfDeath(model.y),
 									$author$project$Main$checkBlessedStrikes(model.F),
-									$author$project$Main$checkSpiritShroud(model.w)
+									$author$project$Main$checkSpiritShroud(model.x)
 								]);
 						case 1:
 							return _List_fromArray(
 								[
 									$author$project$Main$checkCriticalSuccess(model.l),
-									$author$project$Main$checkTouchOfDeath(model.x),
-									$author$project$Main$checkEnemyDamaged(model.s),
-									$author$project$Main$checkSpiritShroud(model.w)
+									$author$project$Main$checkTouchOfDeath(model.y),
+									$author$project$Main$checkEnemyDamaged(model.t),
+									$author$project$Main$checkSpiritShroud(model.x)
 								]);
 						default:
 							return _List_fromArray(
 								[
 									$author$project$Main$checkCriticalSuccess(model.l),
-									$author$project$Main$checkEnemyDamaged(model.s)
+									$author$project$Main$checkEnemyDamaged(model.t)
 								]);
 					}
 				}())
@@ -6725,10 +6763,10 @@ var $author$project$Main$view = function (model) {
 			]),
 		_List_fromArray(
 			[
-				$author$project$Main$setLevel(model.t),
+				$author$project$Main$setLevel(model.u),
 				$author$project$Main$selectAttackType,
 				function () {
-				var _v0 = model.r;
+				var _v0 = model.s;
 				switch (_v0) {
 					case 0:
 						return A2(
@@ -6745,7 +6783,7 @@ var $author$project$Main$view = function (model) {
 							_List_Nil,
 							_List_fromArray(
 								[
-									$author$project$Main$selectSpell($author$project$Main$meleeSpells),
+									A2($author$project$Main$selectSpell, model.p, $author$project$Main$meleeSpells),
 									$author$project$Main$setSpellSlot(model.D),
 									$author$project$Main$setModifiers(model)
 								]));
@@ -6755,7 +6793,7 @@ var $author$project$Main$view = function (model) {
 							_List_Nil,
 							_List_fromArray(
 								[
-									$author$project$Main$selectSpell($author$project$Main$rangedSpells),
+									A2($author$project$Main$selectSpell, model.p, $author$project$Main$rangedSpells),
 									$author$project$Main$setSpellSlot(model.D),
 									$author$project$Main$setModifiers(model)
 								]));
